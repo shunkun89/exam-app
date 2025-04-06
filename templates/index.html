@@ -6,6 +6,16 @@
   <title>受験番号検索</title>
 </head>
 <body>
+<!-- 中略 -->
+
+  {% if result %}
+    <p style="color:green;">✅ result に何か入ってる</p>
+  {% else %}
+    <p style="color:orange;">🔍 result が空 or None</p>
+  {% endif %}
+
+<!-- 中略 -->
+
   <h2>受験番号で検索</h2>
   <form method="POST">
     <input type="text" name="exam_number" maxlength="4" placeholder="4桁の受験番号" required>
