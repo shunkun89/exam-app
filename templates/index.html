@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>受験番号検索</title>
+</head>
+<body>
+  <h2>受験番号で検索</h2>
+  <input type="text" id="examNumber" maxlength="4" placeholder="4桁の受験番号">
+  <button onclick="search()">検索</button>
+  <div id="result"></div>
+
+  <script>
+    async function search() {
+      const number = document.getElementById('examNumber').value;
+      const response = await fetch('/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ exam_number: number })
+      });
+      const data = await response.json();
+      const resultDiv = document.getElementById('result');
+
+      if (response.ok) {
+        resultDiv.innerHTML = `
+          <p>氏名：${data.氏名}</p>
+          <p>受験区分：${data.受験区分}</p>
+          <p>クラス：${data.クラス}</p>
+          <p>出席番号：${data.出席番号}</p>
+          <p>座席番号：${data.座席番号}</p>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p style="color:red">${data.error}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
